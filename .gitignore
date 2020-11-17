@@ -1,0 +1,20 @@
+QF_ILruntime/Library/
+QF_ILruntime/.idea/
+QF_ILruntime/.vs/
+QF_ILruntime/.vscode/
+QF_ILruntime/Logs/
+QF_ILruntime/obj/
+QF_ILruntime/Temp/
+QF_ILruntime/Assets/StreamingAssets/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+打包
+QF_ILruntime/Assets/New Folder.meta
+QF_ILruntime/AssetBundles/
