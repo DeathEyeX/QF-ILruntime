@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic; 
+using UnityEngine; 
+
+namespace BossCat
+{
+public enum DataKey{
+KeyContent
+}
+public enum DataType{
+TypeContent
+}
+public class ScriptName1: NormalSingleton<ScriptName2> {
+
+	public const string loadPath = "GameData/";
+	public Dictionary<int, Dictionary<int, string>> dDataObj = null;
+
+	public override void Init()
+    {
+        if (dDataObj == null){
+            InitDate();
+        }
+            
+    }
+
+	public Dictionary<int, string> GetContentByKey(int _key)
+    { 
+        return dDataObj[_key];
+    }
+
+    public Dictionary<int, string> GetContentByKey(string _key)
+    { 
+        return dDataObj[Convert.ToInt32(_key)];
+    } 
+
+    public string GetContentByKeyAndType(int _key,int _type)
+    { 
+        return dDataObj[_key][_type];
+    }
+	
+    public string GetContentByKeyAndType(string _key,int _type)
+    { 
+        return dDataObj[Convert.ToInt32(_key)][_type];
+    }
+
+	public string[] GetContentArr(int _key, int _type, char str)
+    { 
+        return dDataObj[_key][_type].Split(str);
+    } 
+
+	private void InitDate()
+    {
+		if(dDataObj != null)
+			return;
+        dDataObj = new Dictionary<int, Dictionary<int, string>>();
+
+        TextAsset txtass = (TextAsset)Resources.Load(loadPath + "TABLENAME", typeof(TextAsset));
+        string stringdata = txtass.ToString();
+
+        string[] stringresult = stringdata.Split(new char[] { '\n' });
+        string line;  
+        Dictionary<int, string> dRow = null;
+        foreach (int Key in Enum.GetValues(typeof(DataKey)))
+        { 
+            line = stringresult[(int)Key + 2];
+            string[] lineStrs = line.Split(',');
+            int len = lineStrs.Length;
+            dRow = new Dictionary<int, string>();
+            foreach (int Type in Enum.GetValues(typeof(DataType)))
+            { 
+                dRow.Add(Type, lineStrs[(int)Type]); 
+            }  
+            dDataObj.Add(Key, dRow);
+        }
+    }
+}
+}
